@@ -1,4 +1,4 @@
-package com.sciatta.light.core.consumer;
+package com.sciatta.light.core.consumer.proxy;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.parser.ParserConfig;
@@ -19,8 +19,8 @@ import java.lang.reflect.Proxy;
 @Slf4j
 public class Rpc {
     static {
-        // 解决com.alibaba.fastjson.JSONException: autoType is not support.
-        // 白名单
+        // resolve: com.alibaba.fastjson.JSONException: autoType is not support.
+        // add fastjson white list
         ParserConfig.getGlobalInstance().addAccept("com.sciatta.light");
     }
     
