@@ -12,18 +12,9 @@ public class RpcResponse {
     private Object result;
     private Status status;
     private Exception exception;
-    
-    /**
-     * request status
-     */
+
     public enum Status {
-        /**
-         * process success
-         */
-        SUCCESS,
-        /**
-         * process fail
-         */
-        FAIL
+
+        SUCCESS, FAIL
     }
 }

@@ -11,27 +11,13 @@ import java.util.stream.Collectors;
  * reflect util
  */
 public class ReflectUtil {
-    /**
-     * Invoke method of service
-     *
-     * @param service
-     * @param methodName
-     * @param params
-     * @return
-     */
+    
     public static Object invokeMethod(Object service, String methodName, Object[] params)
             throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
         Method method = service.getClass().getMethod(methodName, resolveParamClassFromParam(params));
-        Object result = method.invoke(service, params);
-        return result;
+        return method.invoke(service, params);
     }
     
-    /**
-     * Resolve class of param
-     *
-     * @param params
-     * @return
-     */
     public static Class<?>[] resolveParamClassFromParam(Object[] params) {
         return Arrays.stream(params).map(Object::getClass).collect(Collectors.toList()).toArray(new Class<?>[params.length]);
     }
