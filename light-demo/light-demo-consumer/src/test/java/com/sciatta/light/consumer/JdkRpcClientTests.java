@@ -1,5 +1,6 @@
 package com.sciatta.light.consumer;
 
+import com.sciatta.light.core.common.RpcException;
 import com.sciatta.light.core.consumer.RpcClient;
 import com.sciatta.light.demo.api.Order;
 import com.sciatta.light.demo.api.OrderService;
@@ -26,6 +27,11 @@ public class JdkRpcClientTests {
     private RpcClient rpcClient;
     
     @Test
+    void testNoProvider() {
+        assertThrows(RpcException.class, () -> testUserService());
+    }
+    
+    @Test
     @Disabled
     void testUserService() {
         UserService userService = rpcClient.create(UserService.class, "http://localhost:8080");
@@ -41,5 +47,13 @@ public class JdkRpcClientTests {
         Order order = orderService.findOrderByIdAndName(1, "iphone");
         assertEquals(1, order.getOrderId());
         assertEquals("iphone", order.getOrderName());
+    }
+    
+    @Test
+    @Disabled
+    void testNoOrder() {
+        OrderService orderService = rpcClient.create(OrderService.class, "http://localhost:8080");
+        
+        assertThrows(RpcException.class,()->orderService.findOrderByIdAndName(2, "iphone"));
     }
 }

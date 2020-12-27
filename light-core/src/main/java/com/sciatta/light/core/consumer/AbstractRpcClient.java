@@ -73,14 +73,12 @@ public abstract class AbstractRpcClient implements RpcClient {
             if (response.body() != null) {
                 rpcResponse = JSON.parseObject(response.body().string(), RpcResponse.class);
             } else {
-                throw new RpcException("invalid response body");
+                rpcResponse = buildFailRpcResponse(new RpcException("invalid response body"));
             }
-        } catch (IOException | RpcException e) {
-            rpcResponse = new RpcResponse();
-            rpcResponse.setStatus(RpcResponse.Status.FAIL);
-            rpcResponse.setException(e);
+        } catch (IOException e) {
+            rpcResponse = buildFailRpcResponse(new RpcException(e.getMessage()));
         }
-        
+    
         log.debug("recv: " + rpcResponse);
         
         assert rpcResponse != null;
@@ -88,6 +86,18 @@ public abstract class AbstractRpcClient implements RpcClient {
     }
     
     protected Object toObject(RpcResponse rpcResponse) {
+        if (rpcResponse.getStatus().equals(RpcResponse.Status.FAIL)) {
+            RpcException e = rpcResponse.getException();
+            log.error(e.getMessage());
+            throw e;
+        }
         return JSON.parse(rpcResponse.getResult().toString());
+    }
+    
+    private RpcResponse buildFailRpcResponse(RpcException e) {
+        RpcResponse rpcResponse = new RpcResponse();
+        rpcResponse.setStatus(RpcResponse.Status.FAIL);
+        rpcResponse.setException(e);
+        return rpcResponse;
     }
 }

@@ -5,7 +5,7 @@ package com.sciatta.light.core.common;
  * All Rights Reserved(C) 2017 - 2020 SCIATTA<br><p/>
  * RpcException
  */
-public class RpcException extends Exception {
+public class RpcException extends RuntimeException {
     public RpcException(String message) {
         super(message);
     }

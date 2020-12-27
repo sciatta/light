@@ -41,9 +41,14 @@ public class ReflectRpcInvoker implements RpcInvoker {
             rpcResponse.setStatus(RpcResponse.Status.SUCCESS);
             rpcResponse.setResult(JSON.toJSONString(result, SerializerFeature.WriteClassName));
         } catch (NoSuchMethodException | IllegalAccessException | InvocationTargetException e) {
-            log.error(e.getMessage());
+            if (e.getCause() != null) {
+                log.error(e.getCause().getMessage());
+                rpcResponse.setException(new RpcException(e.getCause().getMessage()));
+            } else {
+                log.error(e.getMessage());
+                rpcResponse.setException(new RpcException(e.getMessage()));
+            }
             rpcResponse.setStatus(RpcResponse.Status.FAIL);
-            rpcResponse.setException(new RpcException(e));
         }
         
         log.debug("send: " + rpcResponse);

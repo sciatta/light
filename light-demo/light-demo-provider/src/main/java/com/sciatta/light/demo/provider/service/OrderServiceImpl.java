@@ -1,5 +1,6 @@
 package com.sciatta.light.demo.provider.service;
 
+import com.sciatta.light.core.common.RpcException;
 import com.sciatta.light.demo.api.Order;
 import com.sciatta.light.demo.api.OrderService;
 
@@ -15,6 +16,8 @@ public class OrderServiceImpl implements OrderService {
         if (orderId.equals(1)) {
             order.setOrderId(orderId);
             order.setOrderName(orderName);
+        } else {
+            throw new RpcException("no order: " + orderId);
         }
         return order;
     }

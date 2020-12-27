@@ -11,7 +11,7 @@ import lombok.Data;
 public class RpcResponse {
     private Object result;
     private Status status;
-    private Exception exception;
+    private RpcException exception;
 
     public enum Status {
 
