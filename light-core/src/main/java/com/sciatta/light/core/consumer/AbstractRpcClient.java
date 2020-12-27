@@ -24,22 +24,22 @@ public abstract class AbstractRpcClient implements RpcClient {
     }
     
     @Override
-    public <T> T create(Class<T> klass, String url) {
-        return newProxy(klass, url);
+    public <T> T create(Class<T> klass, String targetUrl) {
+        return newProxy(klass, targetUrl);
     }
     
-    protected abstract <T> T newProxy(Class<T> klass, String url);
+    protected abstract <T> T newProxy(Class<T> klass, String targetUrl);
     
     protected abstract class RpcClientCallbackHandler {
-        private Class<?> klass;
-        private String targetUrl;
-    
+        private final Class<?> klass;
+        private final String targetUrl;
+        
         public RpcClientCallbackHandler(Class<?> klass, String targetUrl) {
             this.klass = klass;
             this.targetUrl = targetUrl;
         }
-    
-        public Object callback(Method method, Object[] args) throws Throwable {
+        
+        public Object callback(Method method, Object[] args) {
             // 1 step -- get rpc request
             RpcRequest rpcRequest = toRpcRequest(klass, method, args);
             // 2 step -- post rpc request to server
@@ -57,13 +57,13 @@ public abstract class AbstractRpcClient implements RpcClient {
         return rpcRequest;
     }
     
-    protected RpcResponse post(RpcRequest rpcRequest, String url) {
+    protected RpcResponse post(RpcRequest rpcRequest, String targetUrl) {
         log.debug("send: " + rpcRequest);
         
         RequestBody requestBody = RequestBody.create(MediaType.get("application/json; charset=utf-8"), JSON.toJSONString(rpcRequest));
         
         Request request = new Request.Builder()
-                .url(url)
+                .url(targetUrl)
                 .post(requestBody)
                 .build();
         
@@ -80,7 +80,7 @@ public abstract class AbstractRpcClient implements RpcClient {
             rpcResponse.setStatus(RpcResponse.Status.FAIL);
             rpcResponse.setException(e);
         }
-    
+        
         log.debug("recv: " + rpcResponse);
         
         assert rpcResponse != null;

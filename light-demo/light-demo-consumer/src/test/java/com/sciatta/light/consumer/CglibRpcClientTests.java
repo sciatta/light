@@ -7,22 +7,21 @@ import com.sciatta.light.demo.api.User;
 import com.sciatta.light.demo.api.UserService;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 /**
  * Created by yangxiaoyu on 2020/12/26<br>
  * All Rights Reserved(C) 2017 - 2020 SCIATTA<br><p/>
- * JdkRpcClientTests
+ * CglibRpcClientTests
  */
 @SpringBootTest
-public class JdkRpcClientTests {
+public class CglibRpcClientTests {
     @Autowired
-    @Qualifier("jdk")
+    @Qualifier("cglib")
     private RpcClient rpcClient;
     
     @Test
