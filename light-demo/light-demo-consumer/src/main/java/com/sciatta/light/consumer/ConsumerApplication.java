@@ -1,6 +1,5 @@
 package com.sciatta.light.consumer;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,8 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * All Rights Reserved(C) 2017 - 2020 SCIATTA<br><p/>
  * ConsumerApplication
  */
-@SpringBootApplication
-@Slf4j
+@SpringBootApplication(scanBasePackages = {"com.sciatta.light"})
 public class ConsumerApplication {
     public static void main(String[] args) {
         SpringApplication.run(ConsumerApplication.class, args);    // run spring application
