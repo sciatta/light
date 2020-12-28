@@ -16,9 +16,10 @@ import java.lang.reflect.Proxy;
 @Service("jdk")
 @Slf4j
 public class JdkRpcClient extends AbstractRpcClient {
+    
     @Override
     @SuppressWarnings("unchecked")
-    protected <T> T newProxy(Class<T> klass, String targetUrl) {
+    public <T> T create(Class<T> klass, String targetUrl) {
         log.debug("jdk proxy engine");
         return (T) Proxy.newProxyInstance(this.getClass().getClassLoader(), new Class[]{klass},
                 new JdkRpcClientInvocationHandler(klass, targetUrl));

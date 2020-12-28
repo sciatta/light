@@ -23,13 +23,6 @@ public abstract class AbstractRpcClient implements RpcClient {
         ParserConfig.getGlobalInstance().addAccept("com.sciatta.light");
     }
     
-    @Override
-    public <T> T create(Class<T> klass, String targetUrl) {
-        return newProxy(klass, targetUrl);
-    }
-    
-    protected abstract <T> T newProxy(Class<T> klass, String targetUrl);
-    
     protected abstract class RpcClientCallbackHandler {
         private final Class<?> klass;
         private final String targetUrl;

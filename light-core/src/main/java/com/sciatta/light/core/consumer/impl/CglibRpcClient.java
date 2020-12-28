@@ -21,7 +21,7 @@ public class CglibRpcClient extends AbstractRpcClient implements RpcClient {
     
     @Override
     @SuppressWarnings("unchecked")
-    protected <T> T newProxy(Class<T> klass, String targetUrl) {
+    public <T> T create(Class<T> klass, String targetUrl) {
         log.debug("cglib proxy engine");
         
         Enhancer enhancer = new Enhancer();
